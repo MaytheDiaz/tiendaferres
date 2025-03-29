@@ -5,27 +5,26 @@ from pymongo import MongoClient
 db = dbase()
 usuarios = Blueprint('usuarios', __name__)
 
-@usuarios.route('/admin/in_usuario', methods=['GET', 'POST'])
+@usuarios.route('/admin/in_usuario',methods=['GET','POST'])
 def inuser():
     # Verifica si el usuario está en la sesión
     if 'username' not in session:
-        flash("Inicia sesión con tu usuario y contraseña")
+        flash("Inicia sesion con tu usuario y contraseña")
         return redirect(url_for('usuarios.index'))  # Redirige al usuario al inicio si no está en la sesión
-
+    
     if request.method == 'POST':
         usuarios = db["usuarios"]
         cedula = request.form['cedula']
         user = request.form['user']
         correo = request.form['correo']
-        rol = request.form['rol']  # Captura el rol del formulario
         contraseña = request.form['contraseña']
-
-        exist_cedula = usuarios.find_one({"cedula": cedula})
-        exist_user = usuarios.find_one({"user": user})
-        exist_correo = usuarios.find_one({"correo": correo})
+    
+        exist_cedula = usuarios.find_one ({"cedula":cedula})
+        exist_user = usuarios.find_one ({"user":user})
+        exist_correo = usuarios.find_one ({"correo":correo})
 
         if exist_cedula:
-            flash("La cédula ya existe")
+            flash("La cedula ya existe")
             return redirect(url_for('usuarios.inuser'))
         elif exist_user:
             flash("El usuario ya existe")
@@ -34,7 +33,7 @@ def inuser():
             flash("El correo ya existe")
             return redirect(url_for('usuarios.inuser'))
         else:
-            usuario = Usuario(cedula, user, correo, rol, contraseña)
+            usuario = Usuario(cedula,user,correo,contraseña)
             usuarios.insert_one(usuario.UsuarioDBCollection())
             flash("Enviado a la base de datos")
             return redirect(url_for('usuarios.inuser'))

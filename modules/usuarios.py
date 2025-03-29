@@ -1,9 +1,8 @@
 class Usuario:
-    def __init__(self, cedula,user,correo,rol,contraseña):
+    def __init__(self, cedula,user,correo,contraseña):
         self.cedula=cedula
         self.user=user
         self.correo=correo
-        self.rol=rol
         self.contraseña=contraseña
         
 
@@ -12,7 +11,6 @@ class Usuario:
             "cedula":self.cedula,
             "user":self.user,
             "correo":self.correo,
-            "rol": self.rol, 
             "contraseña":self.contraseña,
             
         }
